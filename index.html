@@ -23,777 +23,106 @@
       --font-mono: "JetBrains Mono", ui-monospace, monospace;
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--bg-deep); color: var(--text); line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    .bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, rgba(167,139,250,0.08), transparent), radial-gradient(ellipse 50% 30% at 0% 80%, rgba(232,121,249,0.06), transparent), var(--bg-deep); }
+    .bg-grid { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(rgba(120,160,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(120,160,255,0.03) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%); }
 
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg-deep);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
+    .container { width: min(1100px, 92vw); margin-inline: auto; padding-block: 2rem; }
 
-    /* 背景网格与光晕 */
-    .bg-layer {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.15), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(167, 139, 250, 0.08), transparent),
-        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(232, 121, 249, 0.06), transparent),
-        var(--bg-deep);
-    }
+    header { position: sticky; top: 0; z-index: 100; padding: 0.75rem 0; backdrop-filter: blur(12px); background: rgba(7,8,13,0.75); border-bottom: 1px solid var(--border); }
+    .nav-inner { width: min(1100px, 92vw); margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s, text-shadow 0.2s; }
+    nav a:hover { color: var(--accent-cyan); text-shadow: 0 0 20px var(--glow); }
 
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-image:
-        linear-gradient(rgba(120, 160, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(120, 160, 255, 0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
-    }
-
-    .container {
-      width: min(1100px, 92vw);
-      margin-inline: auto;
-      padding-block: 2rem;
-    }
-
-    /* 导航 */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0.75rem 0;
-      backdrop-filter: blur(12px);
-      background: rgba(7, 8, 13, 0.75);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      width: min(1100px, 92vw);
-      margin-inline: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .logo {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s, text-shadow 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--accent-cyan);
-      text-shadow: 0 0 20px var(--glow);
-    }
-
-    /* 入场动画 */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.08s; }
     .reveal-delay-2 { transition-delay: 0.16s; }
     .reveal-delay-3 { transition-delay: 0.24s; }
 
-    /* Hero */
-    .hero {
-      padding: clamp(4rem, 12vh, 7rem) 0 clamp(5rem, 14vh, 8rem);
-      text-align: center;
-    }
+    .hero { padding: clamp(4rem, 12vh, 7rem) 0 clamp(5rem, 14vh, 8rem); text-align: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(34,211,238,0.06); font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-mono); margin-bottom: 1.5rem; }
+    .hero-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 12px var(--accent-cyan); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero h1 { font-size: clamp(2.25rem, 6vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem; background: linear-gradient(135deg, #f0f4fc 0%, #c4d4f0 40%, var(--accent-cyan) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-role { font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--text-muted); max-width: 36ch; margin-inline: auto; margin-bottom: 1.25rem; }
+    .hero-role strong { color: var(--accent-violet); font-weight: 600; }
+    .hero-intro { max-width: 520px; margin-inline: auto; font-size: 1rem; color: var(--text-muted); border-left: 3px solid transparent; border-image: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta)) 1; padding-left: 1.25rem; text-align: left; }
+    .about-me { max-width: 720px; margin: 1.25rem auto 0; padding: 1.2rem 1.25rem; border-radius: var(--radius); border: 1px solid var(--border); background: rgba(18,22,35,0.45); backdrop-filter: blur(10px); text-align: left; color: var(--text-muted); }
+    .about-me strong { color: var(--text); font-weight: 600; }
+    .scroll-hint { margin-top: 3rem; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); opacity: 0.7; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(34, 211, 238, 0.06);
-      font-size: 0.8rem;
-      color: var(--accent-cyan);
-      font-family: var(--font-mono);
-      margin-bottom: 1.5rem;
-    }
+    section { padding: 4rem 0; }
+    .section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-cyan); font-family: var(--font-mono); margin-bottom: 0.5rem; }
+    .section-heading { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin-bottom: 2rem; color: var(--text); }
 
-    .hero-badge::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
-      box-shadow: 0 0 12px var(--accent-cyan);
-      animation: pulse 2s ease-in-out infinite;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .project-card { position: relative; padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(10px); overflow: hidden; transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease; }
+    .project-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-magenta)); opacity: 0.85; }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.25); box-shadow: 0 20px 40px -20px rgba(34,211,238,0.2); }
+    .project-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
+    .project-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; }
+    .project-index { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-violet); margin-bottom: 0.5rem; }
+    .project-time { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent-cyan); opacity: 0.85; margin-top: -0.35rem; margin-bottom: 0.6rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+    .project-tag { font-size: 0.72rem; padding: 0.28rem 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: rgba(167,139,250,0.08); color: var(--text-muted); font-family: var(--font-mono); }
+    .project-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+    a.project-tag { text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; }
+    a.project-tag:hover { border-color: rgba(34,211,238,0.35); color: var(--accent-cyan); background: rgba(34,211,238,0.08); box-shadow: 0 14px 30px rgba(15,23,42,0.55); transform: translateY(-1px); }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.25rem, 6vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #f0f4fc 0%, #c4d4f0 40%, var(--accent-cyan) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero-role {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: var(--text-muted);
-      max-width: 36ch;
-      margin-inline: auto;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-role strong {
-      color: var(--accent-violet);
-      font-weight: 600;
-    }
-
-    .hero-intro {
-      max-width: 520px;
-      margin-inline: auto;
-      font-size: 1rem;
-      color: var(--text-muted);
-      border-left: 3px solid transparent;
-      border-image: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta)) 1;
-      padding-left: 1.25rem;
-      text-align: left;
-    }
-
-    .about-me {
-      max-width: 720px;
-      margin: 1.25rem auto 0;
-      padding: 1.2rem 1.25rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: rgba(18, 22, 35, 0.45);
-      backdrop-filter: blur(10px);
-      text-align: left;
-      color: var(--text-muted);
-    }
-
-    .about-me strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .scroll-hint {
-      margin-top: 3rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      opacity: 0.7;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-    }
-
-    /* Section 通用 */
-    section {
-      padding: 4rem 0;
-    }
-
-    .section-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--accent-cyan);
-      font-family: var(--font-mono);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-heading {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 600;
-      margin-bottom: 2rem;
-      color: var(--text);
-    }
-
-    /* 项目卡片 */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .project-card {
-      position: relative;
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      overflow: hidden;
-      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-magenta));
-      opacity: 0.85;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(34, 211, 238, 0.25);
-      box-shadow: 0 20px 40px -20px rgba(34, 211, 238, 0.2);
-    }
-
-    .project-card h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text);
-    }
-
-    .project-card p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    .project-placeholder {
-      margin-top: 1rem;
-      padding: 0.9rem 1rem;
-      border-radius: 12px;
-      border: 1px dashed rgba(167, 139, 250, 0.35);
-      background: rgba(167, 139, 250, 0.06);
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .project-index {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent-violet);
-      margin-bottom: 0.5rem;
-    }
-
-    .project-time {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--accent-cyan);
-      opacity: 0.85;
-      margin-top: -0.35rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 1rem;
-    }
-
-    .project-tag {
-      font-size: 0.72rem;
-      padding: 0.28rem 0.6rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: rgba(167, 139, 250, 0.08);
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-    }
-
-    .project-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 1rem;
-    }
-
-    a.project-tag {
-      text-decoration: none;
-      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-    }
-
-    a.project-tag:hover {
-      border-color: rgba(34, 211, 238, 0.35);
-      color: var(--accent-cyan);
-      background: rgba(34, 211, 238, 0.08);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.55);
-      transform: translateY(-1px);
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      margin-top: 1.4rem;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      color: var(--accent-cyan);
-      font-size: 0.88rem;
-      font-family: var(--font-mono);
-      text-decoration: none;
-      background: radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.18), transparent 55%);
-      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .project-link:hover {
-      border-color: rgba(56, 189, 248, 0.9);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
-      transform: translateY(-1px);
-      background: radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.24), transparent 55%);
-    }
-
-    /* 项目内图片：大赛轮播 */
-    .media-carousel {
-      margin-top: 1rem;
-    }
-
-    .carousel-stage {
-      position: relative;
-      border-radius: 12px;
-    }
-
-    .carousel-viewport {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: transparent;
-      min-height: 300px;
-    }
-
-    .carousel-track {
-      position: absolute;
-      inset: 0;
-    }
-
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      margin: 0;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .carousel-slide.is-active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: auto;
-      max-height: 500px;
-      object-fit: contain;
-      display: block;
-      background: transparent;
-    }
-
-    /* 让特定轮播封面图填满容器（可能裁切） */
-    .media-carousel--cover .carousel-slide img {
-      height: 100%;
-      max-height: none;
-      object-fit: cover;
-      background: transparent;
-    }
-
-    /* 让特定轮播封面图填满容器（可能裁切） */
-    .media-carousel--cover .carousel-slide img {
-      height: 100%;
-      max-height: none;
-      object-fit: cover;
-      background: transparent;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      z-index: 2;
-      transform: translateY(-50%);
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: rgba(7, 8, 13, 0.72);
-      color: var(--text);
-      font-size: 1.25rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }
-
-    .carousel-btn:hover {
-      background: rgba(34, 211, 238, 0.15);
-      border-color: rgba(34, 211, 238, 0.35);
-      color: var(--accent-cyan);
-    }
-
-    .carousel-btn:focus-visible {
-      outline: 2px solid var(--accent-cyan);
-      outline-offset: 2px;
-    }
-
+    .media-carousel { margin-top: 1rem; }
+    .carousel-stage { position: relative; border-radius: 12px; }
+    .carousel-viewport { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: transparent; min-height: 300px; }
+    .carousel-track { position: absolute; inset: 0; }
+    .carousel-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+    .carousel-slide.is-active { opacity: 1; pointer-events: auto; z-index: 1; }
+    .carousel-slide img { width: 100%; height: auto; max-height: 500px; object-fit: contain; display: block; background: transparent; }
+    .media-carousel--cover .carousel-slide img { height: 100%; max-height: none; object-fit: cover; background: transparent; }
+    .carousel-btn { position: absolute; top: 50%; z-index: 2; transform: translateY(-50%); width: 2rem; height: 2rem; border-radius: 50%; border: 1px solid var(--border); background: rgba(7,8,13,0.72); color: var(--text); font-size: 1.25rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .carousel-btn:hover { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.35); color: var(--accent-cyan); }
     .carousel-prev { left: 0.5rem; }
     .carousel-next { right: 0.5rem; }
+    .carousel-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.65rem; }
+    .carousel-dot { width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0; background: var(--border); cursor: pointer; transition: background 0.2s, transform 0.2s; }
+    .carousel-dot.is-active { background: var(--accent-cyan); transform: scale(1.15); }
+    .media-carousel--portrait .carousel-viewport { margin-inline: auto; max-width: 280px; max-height: none; min-height: 300px; }
+    .media-carousel--portrait .carousel-slide img { object-fit: contain; }
 
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 0.4rem;
-      margin-top: 0.65rem;
-    }
+    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; }
+    .lightbox-backdrop.is-open { display: flex; animation: lightbox-fade 0.18s ease-out; }
+    @keyframes lightbox-fade { from { opacity: 0; transform: scale(1.01); } to { opacity: 1; transform: scale(1); } }
+    .lightbox-inner { position: relative; max-width: 90vw; max-height: 90vh; }
+    .lightbox-inner img { display: block; max-width: 100%; max-height: 90vh; width: auto; height: auto; object-fit: contain; border-radius: 14px; box-shadow: 0 24px 60px rgba(0,0,0,0.7); }
+    .lightbox-close { position: absolute; top: -2.4rem; right: 0; width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid rgba(148,163,184,0.6); background: rgba(15,23,42,0.9); color: #e5e7eb; font-size: 1.1rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
+    .lightbox-close:hover { background: rgba(30,64,175,0.95); border-color: rgba(191,219,254,0.9); transform: translateY(-1px); }
 
-    .carousel-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      border: none;
-      padding: 0;
-      background: var(--border);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
+    .skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.1rem; }
+    .skill-group { border: 1px solid var(--border); border-radius: var(--radius); background: rgba(18,22,35,0.55); backdrop-filter: blur(10px); padding: 1.25rem; }
+    .skill-title { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 0.85rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag { display: inline-block; padding: 0.45rem 0.85rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(167,139,250,0.08); color: var(--text); font-size: 0.88rem; transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
+    .skill-tag:hover { transform: translateY(-1px); border-color: rgba(34,211,238,0.3); box-shadow: 0 0 24px rgba(34,211,238,0.12); }
+    .skill-tag--muted { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.82rem; }
 
-    .carousel-dot.is-active {
-      background: var(--accent-cyan);
-      transform: scale(1.15);
-    }
+    .edu-list { display: grid; gap: 1rem; max-width: 900px; margin-inline: auto; }
+    .edu-item { border: 1px solid var(--border); border-radius: var(--radius); background: rgba(18,22,35,0.55); backdrop-filter: blur(10px); padding: 1.25rem; }
+    .edu-time { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-violet); margin-bottom: 0.4rem; }
+    .edu-school { font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+    .edu-meta { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
 
-    .carousel-dot:focus-visible {
-      outline: 2px solid var(--accent-cyan);
-      outline-offset: 2px;
-    }
+    .contact-box { text-align: center; padding: 2.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: linear-gradient(145deg, rgba(34,211,238,0.06), rgba(167,139,250,0.05)); max-width: 480px; margin-inline: auto; }
+    .contact-rows { display: grid; gap: 1rem; text-align: left; margin-top: 0.25rem; }
+    .contact-row p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .contact-row a, .contact-row span { font-family: var(--font-mono); font-size: 1rem; color: var(--accent-cyan); text-decoration: none; word-break: break-all; transition: color 0.2s, text-shadow 0.2s; }
+    .contact-row a:hover { color: #67e8f9; text-shadow: 0 0 24px var(--glow); }
 
-    /* 竖版截图（小红书等） */
-    .media-carousel--portrait .carousel-viewport {
-      margin-inline: auto;
-      max-width: 280px;
-      max-height: none;
-      min-height: 300px;
-    }
-
-    .media-carousel--portrait .carousel-slide img {
-      object-fit: contain; /* 保持原始比例，不裁切 */
-    }
-
-    /* 图片灯箱（Lightbox） */
-    .lightbox-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .lightbox-backdrop.is-open {
-      display: flex;
-      animation: lightbox-fade 0.18s ease-out;
-    }
-
-    @keyframes lightbox-fade {
-      from {
-        opacity: 0;
-        transform: scale(1.01);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .lightbox-inner {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    .lightbox-inner img {
-      display: block;
-      max-width: 100%;
-      max-height: 90vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 14px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -2.4rem;
-      right: 0;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      font-size: 1.1rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-    }
-
-    .lightbox-close:hover {
-      background: rgba(30, 64, 175, 0.95);
-      border-color: rgba(191, 219, 254, 0.9);
-      transform: translateY(-1px);
-    }
-
-    .lightbox-close:focus-visible {
-      outline: 2px solid var(--accent-cyan);
-      outline-offset: 2px;
-    }
-
-    /* 技能标签云 */
-    .tag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      justify-content: center;
-      max-width: 720px;
-      margin-inline: auto;
-    }
-
-    /* 技能分组标签 */
-    .skill-groups {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.1rem;
-    }
-
-    .skill-group {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(18, 22, 35, 0.55);
-      backdrop-filter: blur(10px);
-      padding: 1.25rem;
-    }
-
-    .skill-title {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-cyan);
-      margin-bottom: 0.85rem;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-tag {
-      display: inline-block;
-      padding: 0.45rem 0.85rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(167, 139, 250, 0.08);
-      color: var(--text);
-      font-size: 0.88rem;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .skill-tag:hover {
-      transform: translateY(-1px);
-      border-color: rgba(34, 211, 238, 0.3);
-      box-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
-    }
-
-    .skill-tag--muted {
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-    }
-
-    /* 教育背景 */
-    .edu-list {
-      display: grid;
-      gap: 1rem;
-      max-width: 900px;
-      margin-inline: auto;
-    }
-
-    .edu-item {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(18, 22, 35, 0.55);
-      backdrop-filter: blur(10px);
-      padding: 1.25rem;
-    }
-
-    .edu-time {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent-violet);
-      margin-bottom: 0.4rem;
-    }
-
-    .edu-school {
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.2rem;
-    }
-
-    .edu-meta {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-      line-height: 1.65;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      border: 1px solid var(--border);
-      background: rgba(167, 139, 250, 0.06);
-      color: var(--text);
-      transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .tag:nth-child(3n + 1) {
-      background: rgba(34, 211, 238, 0.08);
-      border-color: rgba(34, 211, 238, 0.2);
-    }
-
-    .tag:nth-child(3n + 2) {
-      background: rgba(167, 139, 250, 0.08);
-      border-color: rgba(167, 139, 250, 0.2);
-    }
-
-    .tag:nth-child(3n) {
-      background: rgba(232, 121, 249, 0.06);
-      border-color: rgba(232, 121, 249, 0.18);
-    }
-
-    .tag:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 24px rgba(34, 211, 238, 0.15);
-    }
-
-    .tag-lg { font-size: 1rem; padding: 0.55rem 1.15rem; }
-    .tag-sm { font-size: 0.82rem; opacity: 0.95; }
-
-    /* 联系 */
-    .contact-box {
-      text-align: center;
-      padding: 2.5rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(34, 211, 238, 0.06), rgba(167, 139, 250, 0.05));
-      max-width: 480px;
-      margin-inline: auto;
-    }
-
-    .contact-rows {
-      display: grid;
-      gap: 1rem;
-      text-align: left;
-      margin-top: 0.25rem;
-    }
-
-    .contact-row p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .contact-row p {
-      margin-bottom: 0.25rem;
-    }
-
-    .contact-row a,
-    .contact-row span {
-      font-family: var(--font-mono);
-      font-size: 1rem;
-      color: var(--accent-cyan);
-      text-decoration: none;
-      word-break: break-all;
-      transition: color 0.2s, text-shadow 0.2s;
-    }
-
-    .contact-row a:hover {
-      color: #67e8f9;
-      text-shadow: 0 0 24px var(--glow);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem 3rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-    }
+    footer { text-align: center; padding: 2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
   </style>
 </head>
 <body>
@@ -819,18 +148,10 @@
       <div class="container">
         <p class="hero-badge reveal">Available for collaboration</p>
         <h1 class="reveal reveal-delay-1">刘昭言</h1>
-        <p class="hero-role reveal reveal-delay-2">
-          <strong>AI 运营方向</strong> · 用 AI 工具驱动内容增长
-        </p>
-        <p class="hero-intro reveal reveal-delay-3">
-          擅长用 Cursor、Claude 提效，结合数据做内容迭代
-        </p>
+        <p class="hero-role reveal reveal-delay-2"><strong>AI 运营方向</strong> · 用 AI 工具驱动内容增长</p>
+        <p class="hero-intro reveal reveal-delay-3">擅长用 Cursor、Claude 提效，结合数据做内容迭代</p>
         <div class="about-me reveal">
-          <p>
-            <strong>关于我</strong><br />
-            从建筑跨考计算机，再从技术转向 AI 运营方向——我习惯用工具解决问题，用数据验证判断。<br />
-            目前专注于用 AI 工作流提升内容生产效率，正在寻找产品运营 / AI 运营方向的实习机会。
-          </p>
+          <p><strong>关于我</strong><br />从建筑跨考计算机，再从技术转向 AI 运营方向——我习惯用工具解决问题，用数据验证判断。<br />目前专注于用 AI 工作流提升内容生产效率，正在寻找产品运营 / AI 运营方向的实习机会。</p>
         </div>
         <p class="scroll-hint reveal">↓ scroll</p>
       </div>
@@ -844,48 +165,35 @@
           <article class="project-card reveal">
             <p class="project-index">01</p>
             <h3>小红书 AI 内容矩阵</h3>
-            <p>用 AI 大模型进行选题和文案生成,单篇最高2900+赞藏，覆盖生活消费、养生等多元垂类内容</p>
+            <p>用 AI 大模型进行选题和文案生成，单篇最高 2900+ 赞藏，覆盖生活消费、养生等多元垂类内容</p>
             <div class="media-carousel media-carousel--portrait" data-carousel>
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">
-                    <figure class="carousel-slide is-active">
-                      <img src="xhs1.webp" alt="小红书内容截图 1" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="xhs2.webp" alt="小红书内容截图 2" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="xhs3.webp" alt="小红书内容截图 3" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="xhs4.webp" alt="小红书内容截图 4" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="xhs5.webp" alt="小红书内容截图 5" loading="lazy" />
-                    </figure>
+                    <figure class="carousel-slide is-active"><img src="xhs1.webp" alt="小红书内容截图 1" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="xhs2.webp" alt="小红书内容截图 2" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="xhs3.webp" alt="小红书内容截图 3" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="xhs4.webp" alt="小红书内容截图 4" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="xhs5.webp" alt="小红书内容截图 5" loading="lazy" /></figure>
                   </div>
                 </div>
                 <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
                 <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
               </div>
-              <div class="carousel-dots" role="tablist" aria-label="小红书截图轮播">
-                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 3 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 4 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 5 张"></button>
+              <div class="carousel-dots" role="tablist">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
               </div>
             </div>
           </article>
+
           <article class="project-card reveal">
             <p class="project-index">02</p>
             <h3>数据分析可视化网站</h3>
-            <p>
-              基于二手手机市场数据，使用 Python +<br />
-              随机森林算法构建 AI 智能估价系统，含数据分析看板<br />
-              与智能估价两个模块，毕设成绩优秀
-            </p>
+            <p>基于二手手机市场数据，使用 Python + 随机森林算法构建 AI 智能估价系统，含数据分析看板与智能估价两个模块，毕设成绩优秀</p>
             <div class="project-tags">
               <span class="project-tag">Python</span>
               <span class="project-tag">Flask</span>
@@ -896,57 +204,47 @@
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">
-                    <figure class="carousel-slide is-active">
-                      <img src="dashboard.png" alt="数据分析看板（占位图）" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="valuation.webp" alt="智能估价模块（占位图）" loading="lazy" />
-                    </figure>
+                    <figure class="carousel-slide is-active"><img src="dashboard.png" alt="数据分析看板" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="valuation.webp" alt="智能估价模块" loading="lazy" /></figure>
                   </div>
                 </div>
                 <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
                 <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
               </div>
-              <div class="carousel-dots" role="tablist" aria-label="数据分析可视化网站轮播">
-                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+              <div class="carousel-dots" role="tablist">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
               </div>
             </div>
           </article>
+
           <article class="project-card reveal">
             <p class="project-index">03</p>
             <h3>互联网+ 创新创业大赛</h3>
-            <p>核心成员，获江苏省三等奖</p>
+            <p>担任核心成员，负责商业计划书底层逻辑梳理与跨专业团队协调，高频使用 AI 工具提升团队效率，获江苏省三等奖</p>
             <div class="media-carousel" data-carousel>
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">
-                    <figure class="carousel-slide is-active">
-                      <img src="speech1.jpg" alt="路演 / 答辩现场照片 1" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="speech2.jpg" alt="路演 / 答辩现场照片 2" loading="lazy" />
-                    </figure>
+                    <figure class="carousel-slide is-active"><img src="speech1.jpg" alt="路演现场照片 1" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="speech2.jpg" alt="路演现场照片 2" loading="lazy" /></figure>
                   </div>
                 </div>
                 <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
                 <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
               </div>
-              <div class="carousel-dots" role="tablist" aria-label="轮播图切换">
-                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+              <div class="carousel-dots" role="tablist">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
               </div>
             </div>
           </article>
+
           <article class="project-card reveal">
             <p class="project-index">04</p>
             <p class="project-time">2026.03</p>
             <h3>效率工具赛道产品研究</h3>
-            <p>
-              自主搭建 NotebookLM + Claude Code AI研究工作流，<br />
-              系统研究飞书/Notion等效率工具赛道竞争格局、<br />
-              AI趋势与变现模式，产出8页专业产品分析报告。
-            </p>
+            <p>自主搭建 NotebookLM + Claude Code AI 研究工作流，系统研究飞书 / Notion 等效率工具赛道竞争格局、AI 趋势与变现模式，产出 8 页专业产品分析报告。</p>
             <div class="project-tags">
               <span class="project-tag">AI 工作流</span>
               <span class="project-tag">产品研究</span>
@@ -957,20 +255,16 @@
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">
-                    <figure class="carousel-slide is-active">
-                      <img src="workflow.png" alt="AI 研究工作流结构示意图（占位图）" loading="lazy" />
-                    </figure>
-                    <figure class="carousel-slide">
-                      <img src="research.png" alt="赛道研究与报告结构（占位图）" loading="lazy" />
-                    </figure>
+                    <figure class="carousel-slide is-active"><img src="workflow.jpg" alt="AI 研究工作流截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="research.jpg" alt="赛道研究结果汇总" loading="lazy" /></figure>
                   </div>
                 </div>
                 <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
                 <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
               </div>
-              <div class="carousel-dots" role="tablist" aria-label="效率工具赛道产品研究轮播">
-                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
-                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+              <div class="carousel-dots" role="tablist">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
               </div>
             </div>
             <div class="project-actions">
@@ -991,9 +285,15 @@
             <div class="skill-tags">
               <span class="skill-tag">Cursor</span>
               <span class="skill-tag">Claude</span>
+              <span class="skill-tag">ChatGPT</span>
               <span class="skill-tag">Gemini</span>
               <span class="skill-tag">即梦</span>
               <span class="skill-tag">NotebookLM</span>
+              <span class="skill-tag">Midjourney</span>
+              <span class="skill-tag">Stable Diffusion</span>
+              <span class="skill-tag">Suno</span>
+              <span class="skill-tag">Dify</span>
+              <span class="skill-tag">Coze</span>
             </div>
           </div>
           <div class="skill-group reveal">
@@ -1019,7 +319,8 @@
             <div class="skill-tags">
               <span class="skill-tag">Linux</span>
               <span class="skill-tag">Docker</span>
-              <span class="skill-tag">云计算运维</span>
+              <span class="skill-tag">VMware</span>
+              <span class="skill-tag">云计算运维（1+X 中级）</span>
             </div>
           </div>
           <div class="skill-group reveal">
@@ -1085,165 +386,64 @@
   <script>
     (function () {
       var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (prefersReduced) {
-        document.querySelectorAll(".reveal").forEach(function (el) {
-          el.classList.add("visible");
-        });
-        return;
-      }
-
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-      );
-
-      document.querySelectorAll(".reveal").forEach(function (el) {
-        observer.observe(el);
-      });
-
-      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-        anchor.addEventListener("click", function (e) {
-          var id = anchor.getAttribute("href");
-          if (id.length > 1) {
-            var target = document.querySelector(id);
-            if (target) {
-              e.preventDefault();
-              target.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-          }
-        });
-      });
+      if (prefersReduced) { document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("visible"); }); return; }
+      var observer = new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add("visible"); } }); }, { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+      document.querySelectorAll(".reveal").forEach(function(el){ observer.observe(el); });
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor){ anchor.addEventListener("click", function(e){ var id = anchor.getAttribute("href"); if(id.length > 1){ var target = document.querySelector(id); if(target){ e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); } } }); });
     })();
 
     (function () {
-      document.querySelectorAll("[data-carousel]").forEach(function (root) {
+      document.querySelectorAll("[data-carousel]").forEach(function(root){
         var slides = root.querySelectorAll(".carousel-slide");
         var dots = root.querySelectorAll(".carousel-dot");
         var prevBtn = root.querySelector(".carousel-prev");
         var nextBtn = root.querySelector(".carousel-next");
         var i = 0;
         var viewport = root.querySelector(".carousel-viewport");
-
-        var minH = 300;
-        var maxH = 500;
         var resizeTimer = null;
 
-        function updateCarouselHeight() {
-          if (!viewport) return;
+        function updateCarouselHeight(){
+          if(!viewport) return;
           var activeImg = root.querySelector(".carousel-slide.is-active img");
-          if (!activeImg || !activeImg.naturalWidth || !activeImg.naturalHeight) return;
-
+          if(!activeImg || !activeImg.naturalWidth || !activeImg.naturalHeight) return;
           var w = viewport.clientWidth;
-          if (!w) return;
-
-          // 基于图片原始宽高比计算高度，避免裁切；并与 max-height 做一致性限制
+          if(!w) return;
           var idealH = w * (activeImg.naturalHeight / activeImg.naturalWidth);
-          var h = Math.round(Math.max(minH, Math.min(maxH, idealH)));
+          var h = Math.round(Math.max(300, Math.min(500, idealH)));
           viewport.style.height = h + "px";
         }
 
-        // 首次与切换后：监听图片加载，确保高度计算准确
-        root.querySelectorAll(".carousel-slide img").forEach(function (img) {
-          img.addEventListener("load", function () {
-            updateCarouselHeight();
-          });
-        });
+        root.querySelectorAll(".carousel-slide img").forEach(function(img){ img.addEventListener("load", function(){ updateCarouselHeight(); }); });
+        window.addEventListener("resize", function(){ if(resizeTimer) window.clearTimeout(resizeTimer); resizeTimer = window.setTimeout(function(){ updateCarouselHeight(); }, 120); });
 
-        window.addEventListener("resize", function () {
-          if (resizeTimer) window.clearTimeout(resizeTimer);
-          resizeTimer = window.setTimeout(function () {
-            updateCarouselHeight();
-          }, 120);
-        });
-
-        function show(idx) {
+        function show(idx){
           i = (idx + slides.length) % slides.length;
-          slides.forEach(function (s, j) {
-            s.classList.toggle("is-active", j === i);
-          });
-          dots.forEach(function (d, j) {
-            d.classList.toggle("is-active", j === i);
-            d.setAttribute("aria-selected", j === i ? "true" : "false");
-          });
+          slides.forEach(function(s,j){ s.classList.toggle("is-active", j===i); });
+          dots.forEach(function(d,j){ d.classList.toggle("is-active", j===i); d.setAttribute("aria-selected", j===i ? "true" : "false"); });
           updateCarouselHeight();
         }
 
-        if (prevBtn) prevBtn.addEventListener("click", function () { show(i - 1); });
-        if (nextBtn) nextBtn.addEventListener("click", function () { show(i + 1); });
-        dots.forEach(function (d, j) {
-          d.addEventListener("click", function () { show(j); });
-        });
-
-        // 初始化：如果首屏图片已可用，直接设置高度
+        if(prevBtn) prevBtn.addEventListener("click", function(){ show(i-1); });
+        if(nextBtn) nextBtn.addEventListener("click", function(){ show(i+1); });
+        dots.forEach(function(d,j){ d.addEventListener("click", function(){ show(j); }); });
         updateCarouselHeight();
       });
     })();
 
-    // 简单图片灯箱（Lightbox）
-    (function () {
+    (function(){
       var backdrop = document.querySelector("[data-lightbox-backdrop]");
       var imgEl = document.querySelector("[data-lightbox-image]");
       var closeBtn = document.querySelector("[data-lightbox-close]");
-      if (!backdrop || !imgEl || !closeBtn) return;
-
+      if(!backdrop || !imgEl || !closeBtn) return;
       var isOpen = false;
 
-      function openLightbox(src, alt) {
-        if (!src) return;
-        imgEl.src = src;
-        imgEl.alt = alt || "";
-        backdrop.classList.add("is-open");
-        backdrop.removeAttribute("aria-hidden");
-        isOpen = true;
-      }
+      function openLightbox(src, alt){ if(!src) return; imgEl.src = src; imgEl.alt = alt || ""; backdrop.classList.add("is-open"); backdrop.removeAttribute("aria-hidden"); isOpen = true; }
+      function closeLightbox(){ if(!isOpen) return; backdrop.classList.remove("is-open"); backdrop.setAttribute("aria-hidden","true"); window.setTimeout(function(){ imgEl.src = ""; }, 150); isOpen = false; }
 
-      function closeLightbox() {
-        if (!isOpen) return;
-        backdrop.classList.remove("is-open");
-        backdrop.setAttribute("aria-hidden", "true");
-        // 延迟清空，避免关闭动画闪烁
-        window.setTimeout(function () {
-          imgEl.src = "";
-        }, 150);
-        isOpen = false;
-      }
-
-      // 绑定所有轮播图片点击事件
-      document.querySelectorAll(".carousel-slide img").forEach(function (img) {
-        img.style.cursor = "zoom-in";
-        img.addEventListener("click", function (e) {
-          // 阻止冒泡，以免误触其他监听
-          e.stopPropagation();
-          openLightbox(img.currentSrc || img.src, img.alt);
-        });
-      });
-
-      // 点击遮罩关闭（但点击图片本身或关闭按钮不会触发）
-      backdrop.addEventListener("click", function (e) {
-        if (e.target === backdrop) {
-          closeLightbox();
-        }
-      });
-
-      closeBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        closeLightbox();
-      });
-
-      // ESC 键关闭
-      document.addEventListener("keydown", function (e) {
-        if (!isOpen) return;
-        if (e.key === "Escape" || e.key === "Esc") {
-          closeLightbox();
-        }
-      });
+      document.querySelectorAll(".carousel-slide img").forEach(function(img){ img.style.cursor = "zoom-in"; img.addEventListener("click", function(e){ e.stopPropagation(); openLightbox(img.currentSrc || img.src, img.alt); }); });
+      backdrop.addEventListener("click", function(e){ if(e.target === backdrop){ closeLightbox(); } });
+      closeBtn.addEventListener("click", function(e){ e.stopPropagation(); closeLightbox(); });
+      document.addEventListener("keydown", function(e){ if(!isOpen) return; if(e.key === "Escape" || e.key === "Esc"){ closeLightbox(); } });
     })();
   </script>
 </body>

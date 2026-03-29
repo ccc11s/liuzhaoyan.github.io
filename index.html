@@ -209,6 +209,23 @@
       text-align: left;
     }
 
+    .about-me {
+      max-width: 720px;
+      margin: 1.25rem auto 0;
+      padding: 1.2rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(18, 22, 35, 0.45);
+      backdrop-filter: blur(10px);
+      text-align: left;
+      color: var(--text-muted);
+    }
+
+    .about-me strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
     .scroll-hint {
       margin-top: 3rem;
       font-size: 0.75rem;
@@ -605,6 +622,94 @@
       margin-inline: auto;
     }
 
+    /* 技能分组标签 */
+    .skill-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .skill-group {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(18, 22, 35, 0.55);
+      backdrop-filter: blur(10px);
+      padding: 1.25rem;
+    }
+
+    .skill-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 0.85rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(167, 139, 250, 0.08);
+      color: var(--text);
+      font-size: 0.88rem;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34, 211, 238, 0.3);
+      box-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
+    }
+
+    .skill-tag--muted {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    /* 教育背景 */
+    .edu-list {
+      display: grid;
+      gap: 1rem;
+      max-width: 900px;
+      margin-inline: auto;
+    }
+
+    .edu-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(18, 22, 35, 0.55);
+      backdrop-filter: blur(10px);
+      padding: 1.25rem;
+    }
+
+    .edu-time {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-violet);
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-school {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .edu-meta {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
     .tag {
       display: inline-block;
       padding: 0.5rem 1rem;
@@ -650,13 +755,25 @@
       margin-inline: auto;
     }
 
-    .contact-box p {
+    .contact-rows {
+      display: grid;
+      gap: 1rem;
+      text-align: left;
+      margin-top: 0.25rem;
+    }
+
+    .contact-row p {
       color: var(--text-muted);
       font-size: 0.95rem;
       margin-bottom: 0.75rem;
     }
 
-    .contact-box a {
+    .contact-row p {
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-row a,
+    .contact-row span {
       font-family: var(--font-mono);
       font-size: 1rem;
       color: var(--accent-cyan);
@@ -665,7 +782,7 @@
       transition: color 0.2s, text-shadow 0.2s;
     }
 
-    .contact-box a:hover {
+    .contact-row a:hover {
       color: #67e8f9;
       text-shadow: 0 0 24px var(--glow);
     }
@@ -708,6 +825,13 @@
         <p class="hero-intro reveal reveal-delay-3">
           擅长用 Cursor、Claude 提效，结合数据做内容迭代
         </p>
+        <div class="about-me reveal">
+          <p>
+            <strong>关于我</strong><br />
+            从建筑跨考计算机，再从技术转向 AI 运营方向——我习惯用工具解决问题，用数据验证判断。<br />
+            目前专注于用 AI 工作流提升内容生产效率，正在寻找产品运营 / AI 运营方向的实习机会。
+          </p>
+        </div>
         <p class="scroll-hint reveal">↓ scroll</p>
       </div>
     </section>
@@ -860,14 +984,69 @@
     <section id="skills">
       <div class="container">
         <p class="section-title reveal">Stack & Tools</p>
-        <h2 class="section-heading reveal">技能标签</h2>
-        <div class="tag-cloud">
-          <span class="tag tag-lg">AI 工具（Cursor / Claude / Gemini）</span>
-          <span class="tag">Python 脚本</span>
-          <span class="tag tag-lg">内容运营</span>
-          <span class="tag">数据分析</span>
-          <span class="tag tag-sm">Docker</span>
-          <span class="tag">Linux</span>
+        <h2 class="section-heading reveal">技能</h2>
+        <div class="skill-groups">
+          <div class="skill-group reveal">
+            <div class="skill-title">AI 工具应用</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Cursor</span>
+              <span class="skill-tag">Claude</span>
+              <span class="skill-tag">Gemini</span>
+              <span class="skill-tag">即梦</span>
+              <span class="skill-tag">NotebookLM</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <div class="skill-title">内容运营</div>
+            <div class="skill-tags">
+              <span class="skill-tag">小红书运营</span>
+              <span class="skill-tag">选题策划</span>
+              <span class="skill-tag">数据复盘</span>
+              <span class="skill-tag">剪映剪辑</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <div class="skill-title">数据与开发</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">数据可视化</span>
+              <span class="skill-tag">随机森林</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <div class="skill-title">运维与部署</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Linux</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">云计算运维</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <div class="skill-title">语言能力</div>
+            <div class="skill-tags">
+              <span class="skill-tag skill-tag--muted">英语四级 CET-4（496 分）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container">
+        <p class="section-title reveal">Education</p>
+        <h2 class="section-heading reveal">教育背景</h2>
+        <div class="edu-list">
+          <div class="edu-item reveal">
+            <div class="edu-time">2026.09 - 2028.06（预计）</div>
+            <div class="edu-school">南京工业大学 · 电子商务（本科）</div>
+            <div class="edu-meta">专升本待录取</div>
+          </div>
+          <div class="edu-item reveal">
+            <div class="edu-time">2023.09 - 2026.06</div>
+            <div class="edu-school">江苏建筑职业技术大学 · 计算机网络与科学（专科）</div>
+            <div class="edu-meta">院级奖学金 · 互联网+创新创业大赛江苏省三等奖</div>
+          </div>
         </div>
       </div>
     </section>
@@ -877,8 +1056,16 @@
         <p class="section-title reveal">Get in touch</p>
         <h2 class="section-heading reveal">联系方式</h2>
         <div class="contact-box reveal">
-          <p>邮箱</p>
-          <a href="mailto:1592614429@qq.com">1592614429@qq.com</a>
+          <div class="contact-rows">
+            <div class="contact-row">
+              <p>邮箱</p>
+              <a href="mailto:1592614429@qq.com">1592614429@qq.com</a>
+            </div>
+            <div class="contact-row">
+              <p>微信</p>
+              <span>Zoe_L2004</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

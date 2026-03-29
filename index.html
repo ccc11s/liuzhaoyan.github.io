@@ -435,10 +435,15 @@
 
     /* 竖版截图（小红书等） */
     .media-carousel--portrait .carousel-viewport {
-      aspect-ratio: 3 / 4;
-      max-height: 340px;
       margin-inline: auto;
       max-width: 280px;
+      aspect-ratio: auto;
+      max-height: none;
+      min-height: 240px; /* JS 会在图片加载后精确覆盖此高度 */
+    }
+
+    .media-carousel--portrait .carousel-slide img {
+      object-fit: contain; /* 保持原始比例，不裁切 */
     }
 
     /* 技能标签云 */
@@ -727,6 +732,30 @@
         var prevBtn = root.querySelector(".carousel-prev");
         var nextBtn = root.querySelector(".carousel-next");
         var i = 0;
+        var isPortrait = root.classList.contains("media-carousel--portrait");
+        var viewport = root.querySelector(".carousel-viewport");
+
+        function updatePortraitHeight() {
+          if (!isPortrait || !viewport) return;
+          var activeImg = root.querySelector(".carousel-slide.is-active img");
+          if (!activeImg || !activeImg.naturalWidth || !activeImg.naturalHeight) return;
+
+          var w = viewport.clientWidth;
+          if (!w) return;
+          var h = Math.round(w * (activeImg.naturalHeight / activeImg.naturalWidth));
+          viewport.style.height = Math.max(220, h) + "px";
+        }
+
+        if (isPortrait) {
+          root.querySelectorAll(".carousel-slide img").forEach(function (img) {
+            img.addEventListener("load", function () {
+              updatePortraitHeight();
+            });
+          });
+          window.addEventListener("resize", function () {
+            updatePortraitHeight();
+          });
+        }
 
         function show(idx) {
           i = (idx + slides.length) % slides.length;
@@ -737,6 +766,7 @@
             d.classList.toggle("is-active", j === i);
             d.setAttribute("aria-selected", j === i ? "true" : "false");
           });
+          updatePortraitHeight();
         }
 
         if (prevBtn) prevBtn.addEventListener("click", function () { show(i - 1); });
@@ -744,6 +774,11 @@
         dots.forEach(function (d, j) {
           d.addEventListener("click", function () { show(j); });
         });
+
+        // 初始化：如果首屏图片已可用，直接设置高度
+        if (isPortrait) {
+          updatePortraitHeight();
+        }
       });
     })();
   </script>

@@ -337,6 +337,26 @@
       font-family: var(--font-mono);
     }
 
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+
+    a.project-tag {
+      text-decoration: none;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    a.project-tag:hover {
+      border-color: rgba(34, 211, 238, 0.35);
+      color: var(--accent-cyan);
+      background: rgba(34, 211, 238, 0.08);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.55);
+      transform: translateY(-1px);
+    }
+
     .project-link {
       display: inline-flex;
       align-items: center;
@@ -799,8 +819,9 @@
             <p class="project-time">2026.03</p>
             <h3>效率工具赛道产品研究</h3>
             <p>
-              自主搭建 NotebookLM + Claude Code AI 研究工作流，系统研究飞书 / Notion 等效率工具赛道竞争格局、AI 趋势
-              与变现模式，产出 8 页专业产品分析报告。
+              自主搭建 NotebookLM + Claude Code AI研究工作流，<br />
+              系统研究飞书/Notion等效率工具赛道竞争格局、<br />
+              AI趋势与变现模式，产出8页专业产品分析报告。
             </p>
             <div class="project-tags">
               <span class="project-tag">AI 工作流</span>
@@ -828,7 +849,9 @@
                 <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
               </div>
             </div>
-            <a href="#" class="project-link">查看完整报告 →</a>
+            <div class="project-actions">
+              <a class="project-tag" href="report.pdf" target="_blank" rel="noopener">查看完整报告 PDF →</a>
+            </div>
           </article>
         </div>
       </div>

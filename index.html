@@ -292,6 +292,18 @@
       line-height: 1.65;
     }
 
+    .project-placeholder {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px dashed rgba(167, 139, 250, 0.35);
+      background: rgba(167, 139, 250, 0.06);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
     .project-index {
       font-family: var(--font-mono);
       font-size: 0.7rem;
@@ -337,11 +349,11 @@
 
     .carousel-viewport {
       position: relative;
-      aspect-ratio: 16 / 10;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: rgba(0, 0, 0, 0.35);
+      min-height: 300px;
     }
 
     .carousel-track {
@@ -356,6 +368,9 @@
       opacity: 0;
       transition: opacity 0.5s ease;
       pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .carousel-slide.is-active {
@@ -366,9 +381,11 @@
 
     .carousel-slide img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
       display: block;
+      background: #000;
     }
 
     .carousel-btn {
@@ -437,9 +454,8 @@
     .media-carousel--portrait .carousel-viewport {
       margin-inline: auto;
       max-width: 280px;
-      aspect-ratio: auto;
       max-height: none;
-      min-height: 240px; /* JS 会在图片加载后精确覆盖此高度 */
+      min-height: 300px;
     }
 
     .media-carousel--portrait .carousel-slide img {
@@ -609,6 +625,7 @@
             <p class="project-index">02</p>
             <h3>数据分析可视化网站</h3>
             <p>Python 数据处理 + 前端可视化，毕设成绩优秀</p>
+            <div class="project-placeholder">演示视频 / 截图待上传</div>
           </article>
           <article class="project-card reveal">
             <p class="project-index">03</p>
@@ -732,30 +749,39 @@
         var prevBtn = root.querySelector(".carousel-prev");
         var nextBtn = root.querySelector(".carousel-next");
         var i = 0;
-        var isPortrait = root.classList.contains("media-carousel--portrait");
         var viewport = root.querySelector(".carousel-viewport");
 
-        function updatePortraitHeight() {
-          if (!isPortrait || !viewport) return;
+        var minH = 300;
+        var maxH = 500;
+        var resizeTimer = null;
+
+        function updateCarouselHeight() {
+          if (!viewport) return;
           var activeImg = root.querySelector(".carousel-slide.is-active img");
           if (!activeImg || !activeImg.naturalWidth || !activeImg.naturalHeight) return;
 
           var w = viewport.clientWidth;
           if (!w) return;
-          var h = Math.round(w * (activeImg.naturalHeight / activeImg.naturalWidth));
-          viewport.style.height = Math.max(220, h) + "px";
+
+          // 基于图片原始宽高比计算高度，避免裁切；并与 max-height 做一致性限制
+          var idealH = w * (activeImg.naturalHeight / activeImg.naturalWidth);
+          var h = Math.round(Math.max(minH, Math.min(maxH, idealH)));
+          viewport.style.height = h + "px";
         }
 
-        if (isPortrait) {
-          root.querySelectorAll(".carousel-slide img").forEach(function (img) {
-            img.addEventListener("load", function () {
-              updatePortraitHeight();
-            });
+        // 首次与切换后：监听图片加载，确保高度计算准确
+        root.querySelectorAll(".carousel-slide img").forEach(function (img) {
+          img.addEventListener("load", function () {
+            updateCarouselHeight();
           });
-          window.addEventListener("resize", function () {
-            updatePortraitHeight();
-          });
-        }
+        });
+
+        window.addEventListener("resize", function () {
+          if (resizeTimer) window.clearTimeout(resizeTimer);
+          resizeTimer = window.setTimeout(function () {
+            updateCarouselHeight();
+          }, 120);
+        });
 
         function show(idx) {
           i = (idx + slides.length) % slides.length;
@@ -766,7 +792,7 @@
             d.classList.toggle("is-active", j === i);
             d.setAttribute("aria-selected", j === i ? "true" : "false");
           });
-          updatePortraitHeight();
+          updateCarouselHeight();
         }
 
         if (prevBtn) prevBtn.addEventListener("click", function () { show(i - 1); });
@@ -776,9 +802,7 @@
         });
 
         // 初始化：如果首屏图片已可用，直接设置高度
-        if (isPortrait) {
-          updatePortraitHeight();
-        }
+        updateCarouselHeight();
       });
     })();
   </script>

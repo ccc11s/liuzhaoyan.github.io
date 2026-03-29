@@ -352,7 +352,7 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.35);
+      background: transparent;
       min-height: 300px;
     }
 
@@ -385,7 +385,15 @@
       max-height: 500px;
       object-fit: contain;
       display: block;
-      background: #000;
+      background: transparent;
+    }
+
+    /* 让特定轮播封面图填满容器（可能裁切） */
+    .media-carousel--cover .carousel-slide img {
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
+      background: transparent;
     }
 
     .carousel-btn {
@@ -625,7 +633,9 @@
             <p class="project-index">02</p>
             <h3>数据分析可视化网站</h3>
             <p>
-              基于二手手机市场数据，使用 Python + 随机森林算法构建 AI 智能估价系统，含数据分析看板与智能估价两个模块，毕设成绩优秀
+              基于二手手机市场数据，使用 Python +<br />
+              随机森林算法构建 AI 智能估价系统，含数据分析看板<br />
+              与智能估价两个模块，毕设成绩优秀
             </p>
             <div class="project-tags">
               <span class="project-tag">Python</span>
@@ -633,7 +643,7 @@
               <span class="project-tag">随机森林</span>
               <span class="project-tag">数据可视化</span>
             </div>
-            <div class="media-carousel" data-carousel>
+            <div class="media-carousel media-carousel--cover" data-carousel>
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">

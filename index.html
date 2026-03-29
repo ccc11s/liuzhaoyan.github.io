@@ -337,6 +337,29 @@
       font-family: var(--font-mono);
     }
 
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 1.4rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--accent-cyan);
+      font-size: 0.88rem;
+      font-family: var(--font-mono);
+      text-decoration: none;
+      background: radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.18), transparent 55%);
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .project-link:hover {
+      border-color: rgba(56, 189, 248, 0.9);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+      transform: translateY(-1px);
+      background: radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.24), transparent 55%);
+    }
+
     /* 项目内图片：大赛轮播 */
     .media-carousel {
       margin-top: 1rem;
@@ -385,6 +408,14 @@
       max-height: 500px;
       object-fit: contain;
       display: block;
+      background: transparent;
+    }
+
+    /* 让特定轮播封面图填满容器（可能裁切） */
+    .media-carousel--cover .carousel-slide img {
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
       background: transparent;
     }
 
@@ -468,6 +499,80 @@
 
     .media-carousel--portrait .carousel-slide img {
       object-fit: contain; /* 保持原始比例，不裁切 */
+    }
+
+    /* 图片灯箱（Lightbox） */
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .lightbox-backdrop.is-open {
+      display: flex;
+      animation: lightbox-fade 0.18s ease-out;
+    }
+
+    @keyframes lightbox-fade {
+      from {
+        opacity: 0;
+        transform: scale(1.01);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .lightbox-inner img {
+      display: block;
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.4rem;
+      right: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(30, 64, 175, 0.95);
+      border-color: rgba(191, 219, 254, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .lightbox-close:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 2px;
     }
 
     /* 技能标签云 */
@@ -694,8 +799,8 @@
             <p class="project-time">2026.03</p>
             <h3>效率工具赛道产品研究</h3>
             <p>
-              自主搭建 NotebookLM + Claude Code AI 研究工作流，收集飞书 / Notion 等行业文章建立知识库，系统研究赛道竞争格局、AI
-              趋势与变现模式，产出 8 页产品分析报告。
+              自主搭建 NotebookLM + Claude Code AI 研究工作流，系统研究飞书 / Notion 等效率工具赛道竞争格局、AI 趋势
+              与变现模式，产出 8 页专业产品分析报告。
             </p>
             <div class="project-tags">
               <span class="project-tag">AI 工作流</span>
@@ -703,6 +808,27 @@
               <span class="project-tag">NotebookLM</span>
               <span class="project-tag">Claude Code</span>
             </div>
+            <div class="media-carousel" data-carousel>
+              <div class="carousel-stage">
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <figure class="carousel-slide is-active">
+                      <img src="workflow.png" alt="AI 研究工作流结构示意图（占位图）" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="research.png" alt="赛道研究与报告结构（占位图）" loading="lazy" />
+                    </figure>
+                  </div>
+                </div>
+                <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
+                <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
+              </div>
+              <div class="carousel-dots" role="tablist" aria-label="效率工具赛道产品研究轮播">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+              </div>
+            </div>
+            <a href="#" class="project-link">查看完整报告 →</a>
           </article>
         </div>
       </div>
@@ -738,6 +864,13 @@
   <footer>
     <p>© 刘昭言 · Built with curiosity &amp; AI-assisted workflow</p>
   </footer>
+
+  <div class="lightbox-backdrop" data-lightbox-backdrop aria-hidden="true">
+    <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="放大查看项目图片">
+      <button type="button" class="lightbox-close" data-lightbox-close aria-label="关闭">×</button>
+      <img src="" alt="" data-lightbox-image />
+    </div>
+  </div>
 
   <script>
     (function () {
@@ -840,6 +973,66 @@
 
         // 初始化：如果首屏图片已可用，直接设置高度
         updateCarouselHeight();
+      });
+    })();
+
+    // 简单图片灯箱（Lightbox）
+    (function () {
+      var backdrop = document.querySelector("[data-lightbox-backdrop]");
+      var imgEl = document.querySelector("[data-lightbox-image]");
+      var closeBtn = document.querySelector("[data-lightbox-close]");
+      if (!backdrop || !imgEl || !closeBtn) return;
+
+      var isOpen = false;
+
+      function openLightbox(src, alt) {
+        if (!src) return;
+        imgEl.src = src;
+        imgEl.alt = alt || "";
+        backdrop.classList.add("is-open");
+        backdrop.removeAttribute("aria-hidden");
+        isOpen = true;
+      }
+
+      function closeLightbox() {
+        if (!isOpen) return;
+        backdrop.classList.remove("is-open");
+        backdrop.setAttribute("aria-hidden", "true");
+        // 延迟清空，避免关闭动画闪烁
+        window.setTimeout(function () {
+          imgEl.src = "";
+        }, 150);
+        isOpen = false;
+      }
+
+      // 绑定所有轮播图片点击事件
+      document.querySelectorAll(".carousel-slide img").forEach(function (img) {
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", function (e) {
+          // 阻止冒泡，以免误触其他监听
+          e.stopPropagation();
+          openLightbox(img.currentSrc || img.src, img.alt);
+        });
+      });
+
+      // 点击遮罩关闭（但点击图片本身或关闭按钮不会触发）
+      backdrop.addEventListener("click", function (e) {
+        if (e.target === backdrop) {
+          closeLightbox();
+        }
+      });
+
+      closeBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+
+      // ESC 键关闭
+      document.addEventListener("keydown", function (e) {
+        if (!isOpen) return;
+        if (e.key === "Escape" || e.key === "Esc") {
+          closeLightbox();
+        }
       });
     })();
   </script>

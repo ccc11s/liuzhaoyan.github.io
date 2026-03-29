@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>刘昭言 · 作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #07080d;
+      --bg-card: rgba(18, 22, 35, 0.65);
+      --border: rgba(120, 160, 255, 0.12);
+      --text: #e8ecf4;
+      --text-muted: #8b95a8;
+      --accent-cyan: #22d3ee;
+      --accent-violet: #a78bfa;
+      --accent-magenta: #e879f9;
+      --glow: rgba(34, 211, 238, 0.35);
+      --radius: 16px;
+      --font-sans: "DM Sans", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* 背景网格与光晕 */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(167, 139, 250, 0.08), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(232, 121, 249, 0.06), transparent),
+        var(--bg-deep);
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(120, 160, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 160, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+    }
+
+    .container {
+      width: min(1100px, 92vw);
+      margin-inline: auto;
+      padding-block: 2rem;
+    }
+
+    /* 导航 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 0;
+      backdrop-filter: blur(12px);
+      background: rgba(7, 8, 13, 0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      width: min(1100px, 92vw);
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 20px var(--glow);
+    }
+
+    /* 入场动画 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    /* Hero */
+    .hero {
+      padding: clamp(4rem, 12vh, 7rem) 0 clamp(5rem, 14vh, 8rem);
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(34, 211, 238, 0.06);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 12px var(--accent-cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #f0f4fc 0%, #c4d4f0 40%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 36ch;
+      margin-inline: auto;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-role strong {
+      color: var(--accent-violet);
+      font-weight: 600;
+    }
+
+    .hero-intro {
+      max-width: 520px;
+      margin-inline: auto;
+      font-size: 1rem;
+      color: var(--text-muted);
+      border-left: 3px solid transparent;
+      border-image: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta)) 1;
+      padding-left: 1.25rem;
+      text-align: left;
+    }
+
+    .scroll-hint {
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      opacity: 0.7;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* Section 通用 */
+    section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+
+    /* 项目卡片 */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      position: relative;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-magenta));
+      opacity: 0.85;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, 0.25);
+      box-shadow: 0 20px 40px -20px rgba(34, 211, 238, 0.2);
+    }
+
+    .project-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .project-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .project-index {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-violet);
+      margin-bottom: 0.5rem;
+    }
+
+    /* 技能标签云 */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: center;
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
+      background: rgba(167, 139, 250, 0.06);
+      color: var(--text);
+      transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .tag:nth-child(3n + 1) {
+      background: rgba(34, 211, 238, 0.08);
+      border-color: rgba(34, 211, 238, 0.2);
+    }
+
+    .tag:nth-child(3n + 2) {
+      background: rgba(167, 139, 250, 0.08);
+      border-color: rgba(167, 139, 250, 0.2);
+    }
+
+    .tag:nth-child(3n) {
+      background: rgba(232, 121, 249, 0.06);
+      border-color: rgba(232, 121, 249, 0.18);
+    }
+
+    .tag:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 24px rgba(34, 211, 238, 0.15);
+    }
+
+    .tag-lg { font-size: 1rem; padding: 0.55rem 1.15rem; }
+    .tag-sm { font-size: 0.82rem; opacity: 0.95; }
+
+    /* 联系 */
+    .contact-box {
+      text-align: center;
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(34, 211, 238, 0.06), rgba(167, 139, 250, 0.05));
+      max-width: 480px;
+      margin-inline: auto;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-box a {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      word-break: break-all;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .contact-box a:hover {
+      color: #67e8f9;
+      text-shadow: 0 0 24px var(--glow);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header>
+    <div class="nav-inner">
+      <span class="logo">LZ · PORTFOLIO</span>
+      <nav aria-label="页面导航">
+        <ul>
+          <li><a href="#hero">首页</a></li>
+          <li><a href="#projects">项目</a></li>
+          <li><a href="#skills">技能</a></li>
+          <li><a href="#contact">联系</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="container">
+        <p class="hero-badge reveal">Available for collaboration</p>
+        <h1 class="reveal reveal-delay-1">刘昭言</h1>
+        <p class="hero-role reveal reveal-delay-2">
+          <strong>AI 运营方向</strong> · 用 AI 工具驱动内容增长
+        </p>
+        <p class="hero-intro reveal reveal-delay-3">
+          擅长用 Cursor、Claude 提效，结合数据做内容迭代
+        </p>
+        <p class="scroll-hint reveal">↓ scroll</p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <p class="section-title reveal">Selected Work</p>
+        <h2 class="section-heading reveal">项目经历</h2>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <p class="project-index">01</p>
+            <h3>小红书 AI 内容矩阵</h3>
+            <p>用 AI 大模型进行选题和文案生成，单篇实现 3000+ 赞藏</p>
+          </article>
+          <article class="project-card reveal">
+            <p class="project-index">02</p>
+            <h3>数据分析可视化网站</h3>
+            <p>Python 数据处理 + 前端可视化，毕设成绩优秀</p>
+          </article>
+          <article class="project-card reveal">
+            <p class="project-index">03</p>
+            <h3>互联网+ 创新创业大赛</h3>
+            <p>核心成员，获江苏省三等奖</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <p class="section-title reveal">Stack & Tools</p>
+        <h2 class="section-heading reveal">技能标签</h2>
+        <div class="tag-cloud">
+          <span class="tag tag-lg">AI 工具（Cursor / Claude / Gemini）</span>
+          <span class="tag">Python 脚本</span>
+          <span class="tag tag-lg">内容运营</span>
+          <span class="tag">数据分析</span>
+          <span class="tag tag-sm">Docker</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <p class="section-title reveal">Get in touch</p>
+        <h2 class="section-heading reveal">联系方式</h2>
+        <div class="contact-box reveal">
+          <p>邮箱</p>
+          <a href="mailto:1592614429@qq.com">1592614429@qq.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 刘昭言 · Built with curiosity &amp; AI-assisted workflow</p>
+  </footer>
+
+  <script>
+    (function () {
+      var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReduced) {
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          el.classList.add("visible");
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+      );
+
+      document.querySelectorAll(".reveal").forEach(function (el) {
+        observer.observe(el);
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener("click", function (e) {
+          var id = anchor.getAttribute("href");
+          if (id.length > 1) {
+            var target = document.querySelector(id);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -299,6 +299,148 @@
       margin-bottom: 0.5rem;
     }
 
+    .project-time {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent-cyan);
+      opacity: 0.85;
+      margin-top: -0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+
+    .project-tag {
+      font-size: 0.72rem;
+      padding: 0.28rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(167, 139, 250, 0.08);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* 项目内图片：大赛轮播 */
+    .media-carousel {
+      margin-top: 1rem;
+    }
+
+    .carousel-stage {
+      position: relative;
+      border-radius: 12px;
+    }
+
+    .carousel-viewport {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .carousel-track {
+      position: absolute;
+      inset: 0;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .carousel-slide.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(7, 8, 13, 0.72);
+      color: var(--text);
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(34, 211, 238, 0.15);
+      border-color: rgba(34, 211, 238, 0.35);
+      color: var(--accent-cyan);
+    }
+
+    .carousel-btn:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 2px;
+    }
+
+    .carousel-prev { left: 0.5rem; }
+    .carousel-next { right: 0.5rem; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 0.65rem;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .carousel-dot.is-active {
+      background: var(--accent-cyan);
+      transform: scale(1.15);
+    }
+
+    .carousel-dot:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 2px;
+    }
+
+    /* 竖版截图（小红书等） */
+    .media-carousel--portrait .carousel-viewport {
+      aspect-ratio: 3 / 4;
+      max-height: 340px;
+      margin-inline: auto;
+      max-width: 280px;
+    }
+
     /* 技能标签云 */
     .tag-cloud {
       display: flex;
@@ -425,6 +567,38 @@
             <p class="project-index">01</p>
             <h3>小红书 AI 内容矩阵</h3>
             <p>用 AI 大模型进行选题和文案生成，单篇实现 3000+ 赞藏</p>
+            <div class="media-carousel media-carousel--portrait" data-carousel>
+              <div class="carousel-stage">
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <figure class="carousel-slide is-active">
+                      <img src="xhs1.jpg" alt="小红书内容截图 1" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="xhs2.jpg" alt="小红书内容截图 2" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="xhs3.jpg" alt="小红书内容截图 3" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="xhs4.jpg" alt="小红书内容截图 4" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="xhs5.jpg" alt="小红书内容截图 5" loading="lazy" />
+                    </figure>
+                  </div>
+                </div>
+                <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
+                <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
+              </div>
+              <div class="carousel-dots" role="tablist" aria-label="小红书截图轮播">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 3 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 4 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 5 张"></button>
+              </div>
+            </div>
           </article>
           <article class="project-card reveal">
             <p class="project-index">02</p>
@@ -435,6 +609,41 @@
             <p class="project-index">03</p>
             <h3>互联网+ 创新创业大赛</h3>
             <p>核心成员，获江苏省三等奖</p>
+            <div class="media-carousel" data-carousel>
+              <div class="carousel-stage">
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <figure class="carousel-slide is-active">
+                      <img src="speech1.jpg" alt="路演 / 答辩现场照片 1" loading="lazy" />
+                    </figure>
+                    <figure class="carousel-slide">
+                      <img src="speech2.jpg" alt="路演 / 答辩现场照片 2" loading="lazy" />
+                    </figure>
+                  </div>
+                </div>
+                <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
+                <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
+              </div>
+              <div class="carousel-dots" role="tablist" aria-label="轮播图切换">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="第 1 张"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false" aria-label="第 2 张"></button>
+              </div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <p class="project-index">04</p>
+            <p class="project-time">2026.03</p>
+            <h3>效率工具赛道产品研究</h3>
+            <p>
+              自主搭建 NotebookLM + Claude Code AI 研究工作流，收集飞书 / Notion 等行业文章建立知识库，系统研究赛道竞争格局、AI
+              趋势与变现模式，产出 8 页产品分析报告。
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">AI 工作流</span>
+              <span class="project-tag">产品研究</span>
+              <span class="project-tag">NotebookLM</span>
+              <span class="project-tag">Claude Code</span>
+            </div>
           </article>
         </div>
       </div>
@@ -507,6 +716,33 @@
               target.scrollIntoView({ behavior: "smooth", block: "start" });
             }
           }
+        });
+      });
+    })();
+
+    (function () {
+      document.querySelectorAll("[data-carousel]").forEach(function (root) {
+        var slides = root.querySelectorAll(".carousel-slide");
+        var dots = root.querySelectorAll(".carousel-dot");
+        var prevBtn = root.querySelector(".carousel-prev");
+        var nextBtn = root.querySelector(".carousel-next");
+        var i = 0;
+
+        function show(idx) {
+          i = (idx + slides.length) % slides.length;
+          slides.forEach(function (s, j) {
+            s.classList.toggle("is-active", j === i);
+          });
+          dots.forEach(function (d, j) {
+            d.classList.toggle("is-active", j === i);
+            d.setAttribute("aria-selected", j === i ? "true" : "false");
+          });
+        }
+
+        if (prevBtn) prevBtn.addEventListener("click", function () { show(i - 1); });
+        if (nextBtn) nextBtn.addEventListener("click", function () { show(i + 1); });
+        dots.forEach(function (d, j) {
+          d.addEventListener("click", function () { show(j); });
         });
       });
     })();

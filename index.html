@@ -84,6 +84,13 @@
     .carousel-dot.is-active { background: var(--accent-cyan); transform: scale(1.15); }
     .media-carousel--portrait .carousel-viewport { margin-inline: auto; max-width: 280px; max-height: none; min-height: 300px; }
     .media-carousel--portrait .carousel-slide img { object-fit: contain; }
+    .project-card--wide { grid-column: 1 / -1; }
+    .impact-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0 0; }
+    .impact-item { padding: 0.85rem; border: 1px solid var(--border); border-radius: 10px; background: rgba(7,8,13,0.35); }
+    .impact-label { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent-cyan); margin-bottom: 0.25rem; }
+    .impact-value { display: block; color: var(--text); font-size: 0.92rem; line-height: 1.45; }
+    .media-carousel--evidence .carousel-viewport { margin-inline: auto; max-width: 460px; min-height: 360px; }
+    .media-carousel--evidence .carousel-slide img { object-fit: contain; }
     .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; }
     .lightbox-backdrop.is-open { display: flex; animation: lightbox-fade 0.18s ease-out; }
     @keyframes lightbox-fade { from { opacity: 0; transform: scale(1.01); } to { opacity: 1; transform: scale(1); } }
@@ -109,6 +116,10 @@
     .contact-row a, .contact-row span { font-family: var(--font-mono); font-size: 1rem; color: var(--accent-cyan); text-decoration: none; word-break: break-all; transition: color 0.2s, text-shadow 0.2s; }
     .contact-row a:hover { color: #67e8f9; text-shadow: 0 0 24px var(--glow); }
     footer { text-align: center; padding: 2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+    @media (max-width: 720px) {
+      .impact-strip { grid-template-columns: 1fr; }
+      .media-carousel--evidence .carousel-viewport { max-width: 100%; min-height: 320px; }
+    }
   </style>
 </head>
 <body>
@@ -134,7 +145,7 @@
         <p class="hero-role reveal reveal-delay-2"><strong>AI 运营方向</strong> · 用 AI 工具驱动内容增长</p>
         <p class="hero-intro reveal reveal-delay-3">擅长用 Cursor、Claude 提效，结合数据做内容迭代</p>
         <div class="about-me reveal">
-          <p><strong>关于我</strong><br />不是科班出身，但做过的事情都可以拿出来说。<br /><br />小红书单篇 2900+ 赞藏、23万+ 浏览；用 Coze 搭过可以直接体验的智能体；用 Python 做过真实的估价系统；用 Claude Code 写过 8 页竞品分析报告；连这个网站也是自己从零搭出来的。<br /><br />正在找 AI 运营 / 内容运营实习，想加入一个真正在用 AI 做事的团队。</p>
+          <p><strong>关于我</strong><br />不是科班出身，但做过的事情都可以拿出来说。<br /><br />小红书单篇 2900+ 赞藏、23万+ 浏览；在木鸟民宿新媒体运营实习中做过爆款短视频内容；用 Coze 搭过可以直接体验的智能体；用 Python 做过真实的估价系统；用 Claude Code 写过 8 页竞品分析报告；连这个网站也是自己从零搭出来的。<br /><br />正在找 AI 运营 / 内容运营实习，想加入一个真正在用 AI 做事的团队。</p>
         </div>
         <p class="scroll-hint reveal">↓ scroll</p>
       </div>
@@ -171,8 +182,60 @@
               </div>
             </div>
           </article>
-          <article class="project-card reveal">
+          <article class="project-card project-card--wide reveal">
             <p class="project-index">02</p>
+            <p class="project-time">木鸟民宿 · 新媒体运营实习</p>
+            <h3>民宿短视频爆款内容运营</h3>
+            <p>参与木鸟民宿新媒体账号内容运营，围绕民宿场景、旅行种草和用户兴趣点进行选题策划、视频包装与数据复盘，沉淀多条高互动短视频截图证据。</p>
+            <div class="impact-strip" aria-label="木鸟民宿实习成果概览">
+              <span class="impact-item">
+                <span class="impact-label">ROLE</span>
+                <span class="impact-value">新媒体运营实习生</span>
+              </span>
+              <span class="impact-item">
+                <span class="impact-label">WORK</span>
+                <span class="impact-value">选题策划 / 短视频包装 / 数据复盘</span>
+              </span>
+              <span class="impact-item">
+                <span class="impact-label">PROOF</span>
+                <span class="impact-value">爆款视频后台截图与合集证据</span>
+              </span>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">新媒体运营</span>
+              <span class="project-tag">短视频策划</span>
+              <span class="project-tag">民宿旅行</span>
+              <span class="project-tag">数据复盘</span>
+            </div>
+            <div class="media-carousel media-carousel--evidence" data-carousel>
+              <div class="carousel-stage">
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <figure class="carousel-slide is-active"><img src="muniao-大爆款视频合集.png" alt="木鸟民宿爆款视频合集截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao-danhuang.png" alt="木鸟民宿蛋黄主题视频数据截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao-dundun.png" alt="木鸟民宿敦敦主题视频数据截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao-haoshi.png" alt="木鸟民宿好事主题视频数据截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao-taotao.png" alt="木鸟民宿桃桃主题视频数据截图" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao1.png" alt="木鸟民宿运营成果截图 1" loading="lazy" /></figure>
+                    <figure class="carousel-slide"><img src="muniao2.png" alt="木鸟民宿运营成果截图 2" loading="lazy" /></figure>
+                  </div>
+                </div>
+                <button type="button" class="carousel-btn carousel-prev" aria-label="上一张">‹</button>
+                <button type="button" class="carousel-btn carousel-next" aria-label="下一张">›</button>
+              </div>
+              <div class="carousel-dots" role="tablist">
+                <button type="button" class="carousel-dot is-active" role="tab" aria-selected="true"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+                <button type="button" class="carousel-dot" role="tab" aria-selected="false"></button>
+              </div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <p class="project-index">03</p>
             <h3>数据分析可视化网站</h3>
             <p>基于二手手机市场数据，使用 Python + 随机森林算法构建 AI 智能估价系统，含数据分析看板与智能估价两个模块，毕设成绩优秀</p>
             <div class="project-tags">
@@ -185,7 +248,7 @@
               <div class="carousel-stage">
                 <div class="carousel-viewport">
                   <div class="carousel-track">
-                    <figure class="carousel-slide is-active"><img src="dashboard.png" alt="数据分析看板" loading="lazy" /></figure>
+                    <figure class="carousel-slide is-active"><img src="dashboard.jpg" alt="数据分析看板" loading="lazy" /></figure>
                     <figure class="carousel-slide"><img src="valuation.webp" alt="智能估价模块" loading="lazy" /></figure>
                   </div>
                 </div>
@@ -199,7 +262,7 @@
             </div>
           </article>
           <article class="project-card reveal">
-            <p class="project-index">03</p>
+            <p class="project-index">04</p>
             <h3>互联网+ 创新创业大赛</h3>
             <p>担任核心成员，负责商业计划书底层逻辑梳理与跨专业团队协调，高频使用 AI 工具提升团队效率，获江苏省三等奖</p>
             <div class="media-carousel" data-carousel>
@@ -220,7 +283,7 @@
             </div>
           </article>
           <article class="project-card reveal">
-            <p class="project-index">04</p>
+            <p class="project-index">05</p>
             <p class="project-time">2026.03</p>
             <h3>效率工具赛道产品研究</h3>
             <p>自主搭建 NotebookLM + Claude Code AI 研究工作流，系统研究飞书 / Notion 等效率工具赛道竞争格局、AI 趋势与变现模式，产出 8 页专业产品分析报告。</p>
@@ -247,11 +310,11 @@
               </div>
             </div>
             <div class="project-actions">
-              <a class="project-tag" href="report.pdf" target="_blank" rel="noopener">查看完整报告 PDF →</a>
+              <a class="project-tag" href="效率工具产品分析报告.pdf" target="_blank" rel="noopener">查看完整报告 PDF →</a>
             </div>
           </article>
           <article class="project-card reveal">
-            <p class="project-index">05</p>
+            <p class="project-index">06</p>
             <p class="project-time">2026.03</p>
             <h3>小红书爆款选题助手</h3>
             <p>基于 Coze 平台搭建的 AI 选题智能体，输入账号方向和目标人群，自动生成 10 个爆款选题，每个包含标题、内容角度和封面风格建议，内容运营人员可直接使用。</p>
@@ -266,7 +329,7 @@
             </div>
           </article>
           <article class="project-card reveal">
-            <p class="project-index">06</p>
+            <p class="project-index">07</p>
             <p class="project-time">2026.03</p>
             <h3>个人作品集网站</h3>
             <p>用 Cursor + Claude 通过 Vibe Coding 方式，从零搭建本站。完成 GitHub 托管、Cloudflare 全球加速、自定义域名绑定全流程，load 时间压缩至 300ms 以内。</p>

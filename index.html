@@ -126,11 +126,15 @@
     .edu-time { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-magenta); margin-bottom: 0.4rem; }
     .edu-school { font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
     .edu-meta { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
-    .contact-box { text-align: center; padding: 2rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface-strong); max-width: 520px; margin-inline: auto; box-shadow: var(--shadow); }
-    .contact-rows { display: grid; gap: 1rem; text-align: left; margin-top: 0.25rem; }
-    .contact-row p { color: #aab7c4; font-size: 0.95rem; margin-bottom: 0.25rem; }
-    .contact-row a, .contact-row span { font-family: var(--font-mono); font-size: 1rem; color: #f6fbff; text-decoration: none; word-break: break-all; transition: color 0.2s; }
-    .contact-row a:hover { color: var(--accent-gold); }
+    .contact-box { padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.88); max-width: 680px; margin-inline: auto; box-shadow: var(--shadow); }
+    .contact-note { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
+    .contact-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; text-align: left; }
+    .contact-row { position: relative; padding: 1rem; border: 1px solid var(--border); border-radius: 10px; background: #f8fbfc; transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .contact-row::before { content: ""; position: absolute; left: 1rem; top: 1rem; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent-gold); }
+    .contact-row:hover { transform: translateY(-2px); border-color: rgba(15,118,110,0.28); background: #ffffff; }
+    .contact-row p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 0.38rem; padding-left: 1rem; }
+    .contact-row a, .contact-row span { font-family: var(--font-mono); font-size: 1rem; color: var(--text); text-decoration: none; word-break: break-all; transition: color 0.2s; }
+    .contact-row a:hover { color: var(--accent-cyan); }
     footer { text-align: center; padding: 2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
@@ -154,6 +158,7 @@
       .media-carousel--portrait .carousel-viewport { max-width: 250px; max-height: 420px; min-height: 320px; }
       .impact-strip { grid-template-columns: 1fr; }
       .media-carousel--evidence .carousel-viewport { max-width: 100%; min-height: 320px; }
+      .contact-rows { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -496,6 +501,7 @@
         <p class="section-title reveal">Get in touch</p>
         <h2 class="section-heading reveal">联系方式</h2>
         <div class="contact-box reveal">
+          <p class="contact-note">如果你正在招 AI 运营 / 内容运营实习，我很愿意带着作品和复盘聊聊。</p>
           <div class="contact-rows">
             <div class="contact-row">
               <p>邮箱</p>
